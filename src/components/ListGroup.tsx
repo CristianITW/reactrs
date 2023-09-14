@@ -1,25 +1,38 @@
-function ListGroup() {
-  let items = [
-    "Shrek",
-    "Fiona",
-    "Ciuchino",
-    "Lord Farquaad",
-    "L'uomo focaccina",
-    "Omino pan di zenzero",
-  ];
+//import { MouseEvent } from "react";
+import { useState } from "react";
+
+interface ListGroupProps {
+  items: string[];
+  heading: string;
+  onSelection: (item: string) => void;
+}
+
+function ListGroup({ items, heading, onSelection }: ListGroupProps) {
+  //Hook
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   //items = [];
 
+  //Event Handler
+  //const handleClick = (e: MouseEvent) => console.log(e);
+
   return (
     <>
-      <h1>S H R E K</h1>
+      <h1>{heading}</h1>
       {items.length === 0 && <p>Non ci sono personaggi</p>}
       <ul className="list-group">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li
-            className="list-group-item"
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
             key={item}
-            onClick={() => console.log(item, "è stato Shrekkato")}
+            onClick={() => {
+              setSelectedIndex(index);
+              onSelection(item);
+            }}
           >
             {" "}
             {item}
